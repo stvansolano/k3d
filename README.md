@@ -13,10 +13,16 @@ A ready-to-use, templated GitHub Codespace that I regularly use for VS Code on G
 - Docker
 - Kubernetes (WIP)
 - NodeJS
-- .NET 3.1
+- .NET
 
 Extensions
 
-- SQL Server
 - Docker
-- C#
+- Kubernetes
+
+## k3d commands
+
+```
+k3d cluster create mycluster \
+    && k3d kubeconfig merge mycluster --kubeconfig-switch-context
+```
