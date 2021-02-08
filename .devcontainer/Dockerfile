@@ -46,4 +46,6 @@ RUN wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh |
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
 
+EXPOSE 8001
+EXPOSE 80
 ENTRYPOINT [ "sleep", "infinity" ]
