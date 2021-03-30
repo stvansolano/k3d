@@ -8,15 +8,15 @@
 	//	"docker-compose.yml"]
 	//,
 
-	//"service": "docker-from-docker",
-	"workspaceFolder": "/workspace",
-
-	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"remoteEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
 		"SYNC_LOCALHOST_KUBECONFIG": "true"
 	},
 
+	//"service": "docker-from-docker",
+	"workspaceFolder": "/workspace",
+
+	// Use this environment variable if you need to bind mount your local source code into a new container.
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
 		"source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind"
