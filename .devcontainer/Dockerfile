@@ -12,7 +12,7 @@ ARG USE_MOBY="true"
 
 # Install needed packages and setup non-root user. Use a separate RUN statement to add your
 # own dependencies. A user of "automatic" attempts to reuse an user ID if one already exists.
-ARG USERNAME=automatic
+ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 COPY library-scripts/*.sh /tmp/library-scripts/
@@ -37,7 +37,7 @@ RUN curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-
 # Script copies localhost's ~/.kube/config file into the container and swaps out 
 # localhost for host.docker.internal on bash/zsh start to keep them in sync.
 COPY copy-kube-config.sh /usr/local/share/
-RUN chown ${USERNAME}:root /usr/local/share/copy-kube-config.sh \
+RUN chown ${USERNAME} /usr/local/share/copy-kube-config.sh \
     && echo "source /usr/local/share/copy-kube-config.sh" | tee -a /root/.bashrc /root/.zshrc /home/${USERNAME}/.bashrc >> /home/${USERNAME}/.zshrc
 
 RUN wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
