@@ -27,6 +27,8 @@ RUN apt-get update \
     
 VOLUME [ "/var/lib/docker" ]
 
+RUN wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+
 # Install kubectl
 RUN curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
     && chmod +x /usr/local/bin/kubectl
@@ -36,11 +38,9 @@ RUN curl -s https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-
 
 # Script copies localhost's ~/.kube/config file into the container and swaps out 
 # localhost for host.docker.internal on bash/zsh start to keep them in sync.
-COPY copy-kube-config.sh /usr/local/share/
-RUN chown ${USERNAME} /usr/local/share/copy-kube-config.sh \
-    && echo "source /usr/local/share/copy-kube-config.sh" | tee -a /root/.bashrc /root/.zshrc /home/${USERNAME}/.bashrc >> /home/${USERNAME}/.zshrc
-
-RUN wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+#COPY copy-kube-config.sh /usr/local/share/
+#RUN chown ${USERNAME} /usr/local/share/copy-kube-config.sh \
+#    && echo "source /usr/local/share/copy-kube-config.sh" | tee -a /root/.bashrc /root/.zshrc /home/${USERNAME}/.bashrc >> /home/${USERNAME}/.zshrc
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -52,8 +52,7 @@ RUN wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh |
 # Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine 
 # inside the container "overrideCommand": false is set in devcontainer.json. 
 # The script will also execute CMD if you need to alter startup behaviors.
-ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
-CMD [ "sleep", "infinity" ]
+ENTRYPOINT [ "sleep", "infinity" ]
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
